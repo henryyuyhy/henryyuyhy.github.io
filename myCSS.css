@@ -1,0 +1,17 @@
+p {
+	word-wrap: normal;
+	word-break: normal;
+}
+
+.article {
+	background-color: #e5e5e5;
+	max-width: 800px;
+	margin: 5px auto;
+}
+.article a {
+	color: #3851a5;
+}
+
+.head {
+	
+}
