@@ -4,8 +4,13 @@ p {
 }
 
 .article {
-	max-width: 800px;
+	max-width: 900px;
 	margin: 5px auto;
+}
+.article img {
+	float: right;
+	margin-right: 10px;
+	width: 48%;
 }
 
 .navbar {
@@ -32,6 +37,15 @@ p {
 .navbar #icon {
 	width: 100px;
 }
+
+.active {
+	background-color: #517649;
+}
+
+.typesetting {
+	border:0px rgba(0, 0, 0, 0)
+}
+
 @media screen and (max-width: 600px) {
 	.navbar #icon {
 		width: 16.6667%;
@@ -40,7 +54,10 @@ p {
 		font-size: 0.9em;
 		padding: 4px 7px;
 	}
-}
-.active {
-	background-color: #517649;
+	
+	.article img {
+		float: none;
+		width: 90%;
+		margin: 5px auto;
+	}
 }
