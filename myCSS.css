@@ -3,6 +3,10 @@ p {
 	word-break: normal;
 }
 
+body {
+	background-color:rgb(248,249,250) !important;
+}
+
 .article {
 	max-width: 900px;
 	margin: 5px auto;
@@ -47,7 +51,8 @@ p {
 }
 
 .typesetting {
-	border:0px rgba(0, 0, 0, 0)
+	border:0px rgba(0, 0, 0, 0);
+	background-color: rgba(0,0,0,0);
 }
 
 @media screen and (max-width:936px) {
