@@ -57,7 +57,7 @@ p {
 }
 @media screen and (max-width: 700px) {
 	.navbar #icon {
-		width: 14.3%;
+		width: 14.4%;
 	}
 	.navbar li {
 		font-size: 0.9em;
