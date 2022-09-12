@@ -22,3 +22,6 @@
 		margin: 5px 10px;
 	}
 }
+* {
+    box-sizing: border-box;
+}
