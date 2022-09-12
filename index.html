@@ -2,7 +2,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<title>5APU_A343的主页 5APU_A343's/index</title>
+		<title>5APU_A343的主页 5APU_A343's index</title>
 		<link rel="shortcut icon" href="icon.jpg" type="image/s-icon">
 		<link href="myCSS.css" rel="stylesheet" type="text/css">
 		<!-- foundation↓ -->
@@ -13,23 +13,11 @@
 		<!-- foundation↑ -->
 	</head>
 	<body>
-		<div class="navbar">
-			<table width="100%" class="typesetting">
-				<td id="icon">
-					<a href="index.html"><span><img width="100%" src="icon.jpg" alt="主页 index"></span></a>
-				</td>
-				<td>
-					<ul>
-						<li class="active"><a href="index.html">主页<br>index</a></li>
-						<li><a href="https://space.bilibili.com/1804589711" target="_blank">我的B站主页<br>my bilibili space</a></li>
-						<li><a href="https://space.bilibili.com/508058104" target="_blank">我的好基友<br>my HAOJIYOU</a></li>
-						<li><a href="https://space.bilibili.com/1415739645" target="_blank">我的另一个好基友<br>my other HAOJIYOU</a></li>
-						<li style="float: right;"><a href="https://www.bilibili.com/video/BV1GJ411x7h7" target="_blank">白嫖我的MC账号<br>BAIPIAO my MC account</a></li>
-					</ul>
-				</td>
-			</table>
-		</div>
-		<div style="max-width: 900px; margin: 5px auto;">
+		<script src="navbar.js"></script>
+		<script>
+			document.getElementById("homepage").style="background-color:#008CBA;"
+		</script>
+		<div style="max-width: 1000px; margin: 5px auto;">
 			<hr>
 			<table width="100%" class="typesetting">
 				<td style="vertical-align: center;">
@@ -38,29 +26,17 @@
 					</a>
 				</td>
 				<td width="200px">
-					<img src="images/32xfurnace-icon.jpg" alt="32倍熔炉 32 times furnace" width="100%">
+					<img src="32xfurnace-icon.jpg" alt="32倍熔炉 32 times furnace" width="100%">
 				</td>
 			</table>
 			<hr>
 		</div>
 		<br>
-		<div style="margin: 0px 25px;">
-			<script src="https://giscus.app/client.js"
-        		data-repo="henryyuyhy/henryyuyhy.github.io"
-        		data-repo-id="R_kgDOHtlwuw"
-        		data-category="Announcements"
-        		data-category-id="DIC_kwDOHtlwu84CQ_Bc"
-        		data-mapping="pathname"
-        		data-strict="0"
-        		data-reactions-enabled="1"
-        		data-emit-metadata="0"
-        		data-input-position="top"
-        		data-theme="light"
-        		data-lang="en"
-        		data-loading="lazy"
-        		crossorigin="anonymous"
-        		async>
-			</script>
-		</div>
+		<!-- 初始化 Foundation JS -->
+		<script>
+		$(document).ready(function() {
+			$(document).foundation();
+		})
+		</script>
 	</body>
 </html>

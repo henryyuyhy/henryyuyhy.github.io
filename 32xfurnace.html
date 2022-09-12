@@ -2,7 +2,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<title>32倍速熔炉 32x furnace group</title>
+		<title>32倍速熔炉 32x furnace</title>
 		<link rel="shortcut icon" href="icon.jpg" type="image/s-icon">
 		<link href="myCSS.css" rel="stylesheet" type="text/css">
 		<!-- foundation↓ -->
@@ -13,22 +13,7 @@
 		<!-- foundation↑ -->
 	</head>
 	<body>
-		<div class="navbar">
-			<table width="100%" class="typesetting">
-				<td id="icon">
-					<a href="index.html"><span><img width="100%" src="icon.jpg" alt="主页 index"></span></a>
-				</td>
-				<td>
-					<ul>
-						<li><a href="index.html">主页<br>index</a></li>
-						<li><a href="https://space.bilibili.com/1804589711" target="_blank">我的B站主页<br>my bilibili space</a></li>
-						<li><a href="https://space.bilibili.com/508058104" target="_blank">我的好基友<br>my HAOJIYOU</a></li>
-						<li><a href="https://space.bilibili.com/1415739645" target="_blank">我的另一个好基友<br>my other HAOJIYOU</a></li>
-						<li style="float: right;"><a href="https://www.bilibili.com/video/BV1GJ411x7h7" target="_blank">白嫖我的MC账号<br>BAIPIAO my MC account</a></li>
-					</ul>
-				</td>
-			</table>
-		</div>
+		<script src="navbar.js"></script>
 		<div class="article">
 			<h4>介绍 Introduction</h4>
 			<p>
@@ -42,7 +27,9 @@
 				The only shortage is that a few carpets might get stuck in the waterway, but since it does not affect on functioning, you can just leave it alone.
 			</p>
 			<div class="articleimg">
-				<img src="images/32xfurnace.jpg">
+				<a href="images/32xfurnace.jpg" target="_blank" class="th">
+					<img src="images/32xfurnace.jpg">
+				</a>
 				<p>熔炉组全貌<br>a picture of the furnace group</p>
 			</div>
 			<br>
@@ -63,12 +50,19 @@
 				Similarly, step on the pressure plate to stop the minecart
 			</p>
 			<div class="articleimg">
-				<img src="images/32xfurnace-insurvivalworld.jpg">
+				<a href="images/32xfurnace-insurvivalworld.jpg" target="_blank" class="th">
+					<img src="images/32xfurnace-insurvivalworld.jpg">
+				</a>
 				<p>我在自己的生存存档里实装的<br>I rebuilt it in my survival world</p>
 			</div>
 			<br>
 			<a style="font-size: 1.3em;padding-left: 10px;" href="files/32xfurnace.zip" target="_blank">下载存档 Download the archive</a>
-			<br>
 		</div>
+		<!-- 初始化 Foundation JS -->
+		<script>
+		$(document).ready(function() {
+			$(document).foundation();
+		})
+		</script>
 	</body>
 </html>
