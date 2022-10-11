@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>My friends</title>
+		<link rel="shortcut icon" href="../images/icon.jpg" type="image/s-icon">
+		<link href="../myCSS.css" rel="stylesheet" type="text/css">
+		<!-- foundation↓ -->
+		<link rel="stylesheet" href="https://cdn.staticfile.org/foundation/5.5.3/css/foundation.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/foundation/5.5.3/js/foundation.min.js"></script>
+		<script src="https://cdn.staticfile.org/foundation/5.5.3/js/vendor/modernizr.js"></script>
+		<!-- foundation↑ -->
+	</head>
+	<body>
+		<script src="navbar.js"></script>
+		<script>
+			document.getElementById("friends").classList="active";
+		</script>
+		<div class="article" style="font-size: 1.3em;">
+			<br>
+			<a href="https://space.bilibili.com/508058104" target="_blank">my HAOJIYOU</a>
+			<br>
+			<a href="https://space.bilibili.com/1415739645" target="_blank">my other HAOJIYOU</a>
+			<br>
+			<a href="https://space.bilibili.com/410951318" target="_blank">another HAOJIYOU</a>
+			<ul>
+				<li>
+					<a href="http://ky58.mysxl.cn" target="_blank">↑a website he made</a>
+				</li>
+			</ul>
+		</div>
+		<!-- 初始化 Foundation JS -->
+		<script>
+		$(document).ready(function() {
+			$(document).foundation();
+		})
+		</script>
+	</body>
+</html>
