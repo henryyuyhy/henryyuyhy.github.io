@@ -88,7 +88,21 @@
 			}
 			window.setInterval("project()", 50);
 		</script>
-		<bgsound src="bgmusic.mp3" loop="-1" />
-		<embed height="50" width="100" src="music.mp3" loop="-1">
+		<audio id="audio" controls>
+			<source src="music.aac" type="audio/aac" />
+		</audio>
+		<button onclick="$pm=1;document.getElementById('audio').pause();">Õ£÷π“Ù¿÷ stop the music</button>
+		<script>
+			$pm=0;
+			document.getElementById("audio").play();
+			function playmusic ()
+			{
+				if($pm==0)
+				{
+					document.getElementById("audio").play();
+				}
+			}
+			window.setInterval("playmusic()",500)
+		</script>
 	</body>
 </html>
