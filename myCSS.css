@@ -35,3 +35,27 @@
 		font-size: 0.7rem !important;
 	}
 }
+
+.alert-box {
+	z-index: 100;
+}
+
+.articlelink {
+	float: left;
+	width: 100%;
+	text-align: center;
+}
+.articlelink:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+ @media only screen and (min-width:700px)
+ {
+	.articlelink {
+		width: 50%;
+	}
+	.articlelinkhr {
+		display: none;
+	}
+ }
