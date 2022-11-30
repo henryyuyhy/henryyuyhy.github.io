@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>凸透镜成像</title>
+		<link rel="shortcut icon" href="../images/icon.jpg" type="image/s-icon">
+		<link href="../myCSS.css" rel="stylesheet" type="text/css">
+		<!-- foundation↓ -->
+		<link rel="stylesheet" href="https://cdn.staticfile.org/foundation/5.5.3/css/foundation.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/foundation/5.5.3/js/foundation.min.js"></script>
+		<script src="https://cdn.staticfile.org/foundation/5.5.3/js/vendor/modernizr.js"></script>
+		<!-- foundation↑ -->
+	</head>
+	<style>
+		@media only screen and (max-width:1000px)
+		{
+			#body {
+				max-width: 1000px;
+			}
+		}
+	</style>
+	<body id="body">
+		<div>
+			<script src="navbar.js"></script>
+			<h2>凸 透 镜 成 像</h2>
+		</div>
+		<iframe id="iframe" src="../convexlensimaging/project.html" style="border: 0;width: 100%;height: calc(100% - 160px);overflow: hidden;"></iframe>
+		<script>
+		$(document).ready(function() {
+		    $(document).foundation();
+		})
+		</script>
+	</body>
+</html>
