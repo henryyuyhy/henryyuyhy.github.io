@@ -5,6 +5,7 @@
 		<title>-</title>
 		<link rel="shortcut icon" href="../images/icon.jpg" type="image/s-icon">
 		<link href="../myCSS.css" rel="stylesheet" type="text/css">
+		
 	</head>
 	<style>
 		circle {
@@ -13,6 +14,12 @@
 	</style>
 	<body style="margin: 0;">
 		<div style="position: fixed;left: 0;top: 0;">
+			<button onclick="speed=1">1x</button>
+			<button onclick="speed=2">2x</button>
+			<button onclick="speed=3">3x</button>
+			<button onclick="speed=5">5x</button>
+			<button onclick="speed=10">10x</button>
+			<br />
 			<button onclick="pauseorcontinue()">pause/continue</button>
 			<div id="databar"></div>
 		</div>
@@ -40,7 +47,7 @@
 			<circle id="20" />
 		</svg>
 		<script>
-			var G=1.5,twarp=0.1,poc=0,planetcount=101;//planetcount including sun
+			var G=1.5,twarp=0.1,poc=0,sc=0,speed=1,running=0,planetcount=101;//planetcount including sun
 			//mass[21],xpos[21],ypos[21],xv[21],yv[21],xa[21],ya[21]
 			var mass=new Array,xpos=new Array,ypos=new Array,xv=new Array,yv=new Array,xa=new Array,ya=new Array,r=new Array,colors=new Array,names=new Array;
 			colors=new Array("#ffff00","#CC0000","#0065B3","#FC0F2D","#008187","#A61D7F","#D0970A","#F9BE58","#018237","#86B81C","#019AC3","#F9766E","#9B4F2A","#FCD600","#E4A8A3","#793E8C","#6CB46B","#00AAA9","#EB81B9","#D49EC1","#A49ABD","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF");
@@ -64,7 +71,7 @@
 			房山线,#EE782E
 			首都机场线,#A49ABD
 			西郊线,#FC0601*/
-			mass[0]=200;
+			mass[0]=250;
 			xpos[0]=0;
 			ypos[0]=0;
 			xv[0]=0;
@@ -92,8 +99,12 @@
 			document.getElementById("svg").innerHTML=svgbasis;
 			svgbasis="";
 			function run () {
-				if(poc)
+			sc=0;
+			while(sc<=speed)
+			{
+				if(poc && !running)
 				{
+				running=1;
 				temp=0;
 				temp1=0;
 				while(temp<=planetcount) //accelaraion calculation
@@ -171,7 +182,6 @@
 					}
 					temp++;
 				}
-				}
 				//console.log(xa[20],ya[20]);
 				temp=1;
 				while(temp<=planetcount) //put sun to center
@@ -185,6 +195,10 @@
 				}
 				xpos[0]=0;
 				ypos[0]=0;
+				running=0;
+				}
+			sc++;
+			}
 			}
 			function display () {
 				var i=0;
@@ -217,7 +231,7 @@
 				}
 			}
 			window.setInterval("display()",50)
-			window.setInterval("run()",0.1);
+			window.setInterval("run()",1);
 			//run(); run();
 		</script>
 	</body>
