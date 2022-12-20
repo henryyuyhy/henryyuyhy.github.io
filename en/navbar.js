@@ -1,7 +1,7 @@
 document.write('<nav style="position: sticky;position: -webkit-sticky;top: 0;background-color:#333;display:block" class="top-bar" data-topbar>')
 document.write('	<ul class="title-area">')
 document.write('		<li id="homepage" class="name">')
-document.write('		<a href="index.html"><img src="../images/icon.jpg" width="47px" style="margin-top: -5px; display: inline;"><h1 style="display: inline;color: white;">&nbspYu#39s website&nbsp</h1></a>')
+document.write('		<a href="index.html"><img src="../images/icon.jpg" width="47px" style="margin-top: -5px; display: inline;"><h1 style="display: inline;color: white;">&nbspYu&#39s website&nbsp</h1></a>')
 document.write('    </li>')
 document.write('    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>')
 document.write('</ul>')
