@@ -1,0 +1,224 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>-</title>
+		<link rel="shortcut icon" href="../images/icon.jpg" type="image/s-icon">
+		<link href="../myCSS.css" rel="stylesheet" type="text/css">
+	</head>
+	<style>
+		circle {
+			stroke-width: 0;
+		}
+	</style>
+	<body style="margin: 0;">
+		<div style="position: fixed;left: 0;top: 0;">
+			<button onclick="pauseorcontinue()">pause/continue</button>
+			<div id="databar"></div>
+		</div>
+		<svg id="svg" style="width: 6000px;height: 6000px;background-color: black;">
+			<circle cx="0" cy="0" r="0" id="0" />
+			<circle id="1" />
+			<circle id="2" />
+			<circle id="3" />
+			<circle id="4" />
+			<circle id="5" />
+			<circle id="6" />
+			<circle id="7" />
+			<circle id="8" />
+			<circle id="9" />
+			<circle id="10" />
+			<circle id="11" />
+			<circle id="12" />
+			<circle id="13" />
+			<circle id="14" />
+			<circle id="15" />
+			<circle id="16" />
+			<circle id="17" />
+			<circle id="18" />
+			<circle id="19" />
+			<circle id="20" />
+		</svg>
+		<script>
+			var G=1.5,twarp=0.1,poc=0,planetcount=101;//planetcount including sun
+			//mass[21],xpos[21],ypos[21],xv[21],yv[21],xa[21],ya[21]
+			var mass=new Array,xpos=new Array,ypos=new Array,xv=new Array,yv=new Array,xa=new Array,ya=new Array,r=new Array,colors=new Array,names=new Array;
+			colors=new Array("#ffff00","#CC0000","#0065B3","#FC0F2D","#008187","#A61D7F","#D0970A","#F9BE58","#018237","#86B81C","#019AC3","#F9766E","#9B4F2A","#FCD600","#E4A8A3","#793E8C","#6CB46B","#00AAA9","#EB81B9","#D49EC1","#A49ABD","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF");
+			names=new Array("sun","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","CP","19","25块钱","#21","#22","#23","#24","#25","#26","#27","#28","#29","#30","#31","#32","#33","#34","#35","#36","#37","#38","#39","#40","#41","#42","#43","#44","#45","#46","#47","#48","#49","#50","#51","#52","#53","#54","#55","#56","#57","#58","#59","#60","#61","#62","#63","#64","#65","#66","#67","#68","#69","#70","#71","#72","#73","#74","#75","#76","#77","#78","#79","#80","#81","#82","#83","#84","#85","#86","#87","#88","#89","#90","#91","#92","#93","#94","#95","#96","#97","#98","#99","#100")
+			/*S1线,#B35A1F,
+			1号线,#CC0000,	
+			2号线,#0065B3,45
+			4号大兴线,#008187,
+			5号线,#A61D7F
+			6号线,#D0970A
+			7号线,#F9BE58
+			8号线,#018237
+			9号线,#86B81C
+			10号线,#019AC3
+			13号线,#FCD600
+			14号线东段,#E4A8A3
+			15号线,#793E8C
+			16号线,#6CB46B
+			昌平线,#EB81B9
+			大兴国际机场线,#2249A3
+			房山线,#EE782E
+			首都机场线,#A49ABD
+			西郊线,#FC0601*/
+			mass[0]=200;
+			xpos[0]=0;
+			ypos[0]=0;
+			xv[0]=0;
+			yv[0]=0;
+			r[0]=0;
+			var temp=1,temp1=0;
+			planetcount--;
+			while(temp<=planetcount)
+			{
+				mass[temp]=(Math.floor(Math.random() * 200) + 900)/250;
+				xpos[temp]=Math.floor(Math.random() * 1000)-500;
+				ypos[temp]=Math.floor(Math.random() * 1000)-500;
+				xv[temp]=(Math.random()-0.5)/10;
+				yv[temp]=(Math.random()-0.5)/10;
+				r[temp]=0;
+				temp++;
+			}
+			temp=0;
+			var svgbasis="";
+			while(temp<=planetcount)
+			{
+				svgbasis=svgbasis+"<circle id='"+temp+"' />"
+				temp++
+			}
+			document.getElementById("svg").innerHTML=svgbasis;
+			svgbasis="";
+			function run () {
+				if(poc)
+				{
+				temp=0;
+				temp1=0;
+				while(temp<=planetcount) //accelaraion calculation
+				{
+					if(mass[temp]!=0)
+					{
+						var xdist,ydist;
+						xa[temp]=0;
+						ya[temp]=0;
+						temp1=0;
+						while(temp1<=planetcount)
+						{
+							if(temp1!=temp)
+							{
+								xdist=xpos[temp]-xpos[temp1];
+								ydist=ypos[temp]-ypos[temp1];
+								xa[temp]=xa[temp]+(G*mass[temp1]*xdist/((xdist*xdist+ydist*ydist)*Math.sqrt(xdist*xdist+ydist*ydist)));
+								ya[temp]=ya[temp]+(G*mass[temp1]*ydist/((xdist*xdist+ydist*ydist)*Math.sqrt(xdist*xdist+ydist*ydist)));
+							}
+							temp1++;
+						}
+					}
+					temp++;
+				}
+				temp=0;
+				while(temp<=planetcount) //pos&velocity&radius calculation
+				{
+					if(mass[temp]!=0)
+					{
+						xpos[temp]=xpos[temp]+xv[temp]*twarp-0.5*xa[temp]*twarp*twarp;
+						xv[temp]=xv[temp]-xa[temp]*twarp;
+						ypos[temp]=ypos[temp]+yv[temp]*twarp-0.5*ya[temp]*twarp*twarp;
+						yv[temp]=yv[temp]-ya[temp]*twarp;
+						r[temp]=Math.sqrt(mass[temp]);
+					}
+					temp++;
+				}
+				temp=0;
+				temp1=0;
+				while(temp<=planetcount) //collision check
+				{
+					temp1=0;
+					if(mass[temp]!=0)
+					{
+						while(temp1<=planetcount)
+						{
+							if(temp1!=temp)
+							{
+								if((xpos[temp]-xpos[temp1])*(xpos[temp]-xpos[temp1])+(ypos[temp]-ypos[temp1])*(ypos[temp]-ypos[temp1])<=(r[temp]+r[temp1])) //collide happens
+								{
+									if(/*mass[temp]>mass[temp1]*/1)
+									{
+										xv[temp]=(xv[temp]*mass[temp]+xv[temp1]+mass[temp1])/(mass[temp]+mass[temp1]);
+										yv[temp]=(yv[temp]*mass[temp]+yv[temp1]+mass[temp1])/(mass[temp]+mass[temp1]);
+										mass[temp]=mass[temp]+mass[temp1];
+										xv[temp1]=0;
+										yv[temp1]=0;
+										mass[temp1]=0;
+										r[temp1]=0;
+									}
+									else
+									{
+										xv[temp1]=(xv[temp1]*mass[temp1]+xv[temp]+mass[temp])/(mass[temp]+mass[temp1]);
+										yv[temp1]=(yv[temp1]*mass[temp1]+yv[temp]+mass[temp])/(mass[temp]+mass[temp1]);
+										mass[temp1]=mass[temp]+mass[temp1];
+										xv[temp]=0;
+										yv[temp]=0;
+										mass[temp]=0;
+										r[temp]=0;
+									}
+								}
+							}
+							temp1++;
+						}
+					}
+					temp++;
+				}
+				}
+				//console.log(xa[20],ya[20]);
+				temp=1;
+				while(temp<=planetcount) //put sun to center
+				{
+					if(mass[temp]!=0)
+					{
+						xpos[temp]=xpos[temp]-xpos[0];
+						ypos[temp]=ypos[temp]-ypos[0];
+					}
+					temp++;
+				}
+				xpos[0]=0;
+				ypos[0]=0;
+			}
+			function display () {
+				var i=0;
+				var display="";
+				display=display+"<table style='background-color:rgba(0,0,0,0);border:0;font-size:20%;color:white'><tr><th>Name</th><th>position</th><th>mass</th></tr>"
+				while(i<=planetcount)
+				{
+					document.getElementById(i).setAttribute("cx",xpos[i]+3000);
+					document.getElementById(i).setAttribute("cy",ypos[i]+3000);
+					document.getElementById(i).setAttribute("r",r[i]);
+					document.getElementById(i).style.fill=colors[i];
+					if(mass[i]!=0)
+					{
+						display=display+"<tr style='background-color:rgba(0,0,0,0);margin:0'><td><p style='color:"+colors[i]+";padding:0'>"+names[i]+"</p></td>"+"<td style='color:white;padding:0'>"+xpos[i]+","+ypos[i]+"</td>"+"<td style='color:white;padding:0'>"+mass[i]+"</td></tr>"
+					}
+					i++;
+				}
+				display=display+"</table>"
+				//console.log(display);
+				document.getElementById("databar").innerHTML=display;
+			}
+			function pauseorcontinue () {
+				if(poc)
+				{
+					poc=false;
+				}
+				else
+				{
+					poc=true;
+				}
+			}
+			window.setInterval("display()",50)
+			window.setInterval("run()",0.1);
+			//run(); run();
+		</script>
+	</body>
+</html>
