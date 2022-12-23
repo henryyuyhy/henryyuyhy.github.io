@@ -86,18 +86,22 @@
 		</div>
 		
 		<script>
-			console.log(document.body.clientWidth,document.body.clientHeight);
-			var G=1.5,twarp=0.0005;
+			//console.log(document.body.clientWidth,document.body.clientHeight);
+			var G=1.5,twarp=0.001;
 			var poc=0; //pause or continue
 			var sc=0,speed=100;
 			var running=false;
-			var planetcount=251;
+			var planetcount=101;
 			var mass=new Array,xpos=new Array,ypos=new Array,xv=new Array,yv=new Array,xa=new Array,ya=new Array,r=new Array,colors=new Array,names=new Array;
+			var xpos1=new Array;ypos1=new Array; //used for acceleration compensation
+			var acc=1.511; //acceleration compensation coefficient
 			colors=new Array("#ffff00");
 			names=new Array("sun");
 			mass[0]=250;
 			xpos[0]=0;
 			ypos[0]=0;
+			xpos1[0]=xpos[0];
+			ypos1[0]=ypos[0];
 			xv[0]=0;
 			yv[0]=0;
 			r[0]=0;
@@ -121,6 +125,8 @@
 				mass[temp]=(Math.floor(Math.random() * 200) + 900)/700;
 				xpos[temp]=Math.floor(Math.random() * 1000)-500;
 				ypos[temp]=Math.floor(Math.random() * 1000)-500;
+				xpos1[temp]=xpos[temp];
+				ypos1[temp]=ypos[temp];
 				xv[temp]=(Math.sqrt(G*mass[0])*ypos[temp])/(Math.sqrt(Math.sqrt(xpos[temp]*xpos[temp]+ypos[temp]*ypos[temp]))*Math.sqrt(xpos[temp]*xpos[temp]+ypos[temp]*ypos[temp]));
 				yv[temp]=-(Math.sqrt(G*mass[0])*xpos[temp])/(Math.sqrt(Math.sqrt(xpos[temp]*xpos[temp]+ypos[temp]*ypos[temp]))*Math.sqrt(xpos[temp]*xpos[temp]+ypos[temp]*ypos[temp]));
 				if(Math.random()<0.5)
@@ -133,7 +139,7 @@
 				r[temp]=0;
 				temp++;
 			}
-			console.log(xv[1])
+			//console.log(xv[1])
 			temp=0;
 			var svgbasis="";
 			while(temp<=planetcount)
@@ -164,8 +170,8 @@
 						{
 							if(temp1!=temp)
 							{
-								xdist=xpos[temp]-xpos[temp1];
-								ydist=ypos[temp]-ypos[temp1];
+								xdist=xpos1[temp]-xpos[temp1];
+								ydist=ypos1[temp]-ypos[temp1];
 								xa[temp]=xa[temp]+(G*mass[temp1]*xdist/((xdist*xdist+ydist*ydist)*Math.sqrt(xdist*xdist+ydist*ydist)));
 								ya[temp]=ya[temp]+(G*mass[temp1]*ydist/((xdist*xdist+ydist*ydist)*Math.sqrt(xdist*xdist+ydist*ydist)));
 							}
@@ -179,9 +185,13 @@
 				{
 					if(mass[temp]!=0)
 					{
+						xpos1[temp]=xpos[temp]+acc*xv[temp]*twarp-0.5*acc*acc*xa[temp]*twarp*twarp;
 						xpos[temp]=xpos[temp]+xv[temp]*twarp-0.5*xa[temp]*twarp*twarp;
+						
 						xv[temp]=xv[temp]-xa[temp]*twarp;
+						ypos1[temp]=ypos[temp]+acc*yv[temp]*twarp-0.5*acc*acc*ya[temp]*twarp*twarp;
 						ypos[temp]=ypos[temp]+yv[temp]*twarp-0.5*ya[temp]*twarp*twarp;
+						
 						yv[temp]=yv[temp]-ya[temp]*twarp;
 						r[temp]=Math.sqrt(mass[temp]);
 					}
@@ -200,7 +210,7 @@
 							{
 								if((xpos[temp]-xpos[temp1])*(xpos[temp]-xpos[temp1])+(ypos[temp]-ypos[temp1])*(ypos[temp]-ypos[temp1])<=5*(r[temp]+r[temp1])) //collide happens
 								{
-									if(/*mass[temp]>mass[temp1]*/1)
+									if(mass[temp]>mass[temp1])
 									{
 										xv[temp]=(xv[temp]*mass[temp]+xv[temp1]+mass[temp1])/(mass[temp]+mass[temp1]);
 										yv[temp]=(yv[temp]*mass[temp]+yv[temp1]+mass[temp1])/(mass[temp]+mass[temp1]);
@@ -247,6 +257,7 @@
 			}
 			var camx=0,camy=0,zoom=1;
 			function display () {
+				//console.log(-1*G*mass[0]/Math.sqrt(xpos[1]*xpos[1]+ypos[1]*ypos[1])+0.5*Math.sqrt(xv[1]*xv[1]+yv[1]*yv[1])*Math.sqrt(xv[1]*xv[1]+yv[1]*yv[1]));
 				var i=0;
 				var display="";
 				display=display+"<table style='background-color:rgba(0,0,0,0);border:0;font-size:20%;color:white'><tr><th>Name</th><th>position</th><th>mass</th></tr>"
