@@ -87,7 +87,7 @@
 		
 		<script>
 			//console.log(document.body.clientWidth,document.body.clientHeight);
-			var G=1.5,twarp=0.001;
+			var G=1.5,dt=0.001;
 			var poc=0; //pause or continue
 			var sc=0,speed=100;
 			var running=false;
@@ -185,14 +185,14 @@
 				{
 					if(mass[temp]!=0)
 					{
-						xpos1[temp]=xpos[temp]+acc*xv[temp]*twarp-0.5*acc*acc*xa[temp]*twarp*twarp;
-						xpos[temp]=xpos[temp]+xv[temp]*twarp-0.5*xa[temp]*twarp*twarp;
+						xpos1[temp]=xpos[temp]+acc*xv[temp]*dt-0.5*acc*acc*xa[temp]*dt*dt;
+						xpos[temp]=xpos[temp]+xv[temp]*dt-0.5*xa[temp]*dt*dt;
 						
-						xv[temp]=xv[temp]-xa[temp]*twarp;
-						ypos1[temp]=ypos[temp]+acc*yv[temp]*twarp-0.5*acc*acc*ya[temp]*twarp*twarp;
-						ypos[temp]=ypos[temp]+yv[temp]*twarp-0.5*ya[temp]*twarp*twarp;
+						xv[temp]=xv[temp]-xa[temp]*dt;
+						ypos1[temp]=ypos[temp]+acc*yv[temp]*dt-0.5*acc*acc*ya[temp]*dt*dt;
+						ypos[temp]=ypos[temp]+yv[temp]*dt-0.5*ya[temp]*dt*dt;
 						
-						yv[temp]=yv[temp]-ya[temp]*twarp;
+						yv[temp]=yv[temp]-ya[temp]*dt;
 						r[temp]=Math.sqrt(mass[temp]);
 					}
 					temp++;
@@ -208,7 +208,7 @@
 						{
 							if(temp1!=temp)
 							{
-								if((xpos[temp]-xpos[temp1])*(xpos[temp]-xpos[temp1])+(ypos[temp]-ypos[temp1])*(ypos[temp]-ypos[temp1])<=5*(r[temp]+r[temp1])) //collide happens
+								if(Math.sqrt((xpos[temp]-xpos[temp1])*(xpos[temp]-xpos[temp1])+(ypos[temp]-ypos[temp1])*(ypos[temp]-ypos[temp1]))<=1*(r[temp]+r[temp1])) //collide happens
 								{
 									if(mass[temp]>mass[temp1])
 									{
