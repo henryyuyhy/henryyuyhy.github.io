@@ -1,0 +1,298 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>-</title>
+		<link rel="shortcut icon" href="../images/icon.jpg" type="image/s-icon">
+		<link href="../myCSS.css" rel="stylesheet" type="text/css">
+		
+	</head>
+	<style>
+		circle {
+			stroke-width: 0;
+		}
+		#div1 {
+			width: calc(100% - 200px);
+			height: 100%;
+		}
+		#svg {
+			height: calc(100% - 100px);
+		}
+	</style>
+	<body style="margin: 0;">
+		<div style="position:absolute;left: 0;top:0;background-color: gray;overflow: auto;height: 100%;">
+			<div id="databar"></div>
+		</div>
+		<div id="div1" style="position: absolute;left: 180;top: 0;">
+			<svg id="svg" style="width: 100%;background-color: black;">
+				<circle cx="0" cy="0" r="0" id="0" />
+				<circle id="1" />
+				<circle id="2" />
+				<circle id="3" />
+				<circle id="4" />
+				<circle id="5" />
+				<circle id="6" />
+				<circle id="7" />
+				<circle id="8" />
+				<circle id="9" />
+				<circle id="10" />
+				<circle id="11" />
+				<circle id="12" />
+				<circle id="13" />
+				<circle id="14" />
+				<circle id="15" />
+				<circle id="16" />
+				<circle id="17" />
+				<circle id="18" />
+				<circle id="19" />
+				<circle id="20" />
+			</svg>
+			<div style="height: 90px;margin: 0px auto;width: 750px;">
+				<button onclick="zoom=zoom/1.5">zoom out</button>
+				<p style="display: inline;font-size: 0.7em;" id="zoomdisplay"></p>
+				<button onclick="zoom=zoom*1.5">zoom in</button>
+				<table style="display: inline;">
+					<tr>
+						<td style="width: 25px;"></td>
+						<td>
+							<button style="width: 25px;height: 25px;" onclick="camy=camy-50/zoom">↑</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button style="width: 25px;height: 25px;" onclick="camx=camx-50/zoom">←</button>
+						</td>
+						<td>
+							<button style="width: 25px;height: 25px;" onclick="camx=0;camy=0;">⚪</button>
+						</td>
+						<td>
+							<button style="width: 25px;height: 25px;" onclick="camx=camx+50/zoom">→</button>
+						</td>
+						<tr>
+							<td style="width: 25px;"></td>
+							<td>
+								<button style="width: 25px;height: 25px;" onclick="camy=camy+50/zoom">↓</button>
+							</td>
+						</tr>
+					</tr>
+				</table>
+				<div style="display: inline;">
+					<button onclick="pauseorcontinue()">pause/continue</button>
+					<button onclick="if(speed!=0.5){speed=speed/2}">decrease speed</button>
+					<p style="display: inline;font-size: 0.7em;" id="speeddisplay"></p>
+					<button onclick="speed=speed*2">increase speed</button>
+				</div>
+			</div>
+		</div>
+		
+		<script>
+			//console.log(document.body.clientWidth,document.body.clientHeight);
+			var G=1.5,dt=0.001;
+			var poc=0; //pause or continue
+			var sc=0,speed=100;
+			var running=false;
+			var planetcount=201;
+			var mass=new Array,xpos=new Array,ypos=new Array,xv=new Array,yv=new Array,xa=new Array,ya=new Array,r=new Array,colors=new Array,names=new Array;
+			var xpos1=new Array;ypos1=new Array; //used for acceleration compensation
+			var acc=1.511; //acceleration compensation coefficient
+			colors=new Array("#ffff00");
+			names=new Array("sun");
+			mass[0]=250;
+			xpos[0]=0;
+			ypos[0]=0;
+			xpos1[0]=xpos[0];
+			ypos1[0]=ypos[0];
+			xv[0]=0;
+			yv[0]=0;
+			r[0]=0;
+			var temp=0,temp1=0;
+			while(temp<=planetcount)
+			{
+				if(colors[temp]==undefined)
+				{
+					colors[temp]="#FFFFFF";
+				}
+				if(names[temp]==undefined)
+				{
+					names[temp]="#"+temp;
+				}
+				temp++;
+			}
+			planetcount--;
+			temp=1
+			while(temp<=planetcount)
+			{
+				mass[temp]=(Math.floor(Math.random() * 200) + 900)/700;
+				xpos[temp]=Math.floor(Math.random() * 1000)-500;
+				ypos[temp]=Math.floor(Math.random() * 1000)-500;
+				xpos1[temp]=xpos[temp];
+				ypos1[temp]=ypos[temp];
+				xv[temp]=(Math.sqrt(G*mass[0])*ypos[temp])/(Math.sqrt(Math.sqrt(xpos[temp]*xpos[temp]+ypos[temp]*ypos[temp]))*Math.sqrt(xpos[temp]*xpos[temp]+ypos[temp]*ypos[temp]));
+				yv[temp]=-(Math.sqrt(G*mass[0])*xpos[temp])/(Math.sqrt(Math.sqrt(xpos[temp]*xpos[temp]+ypos[temp]*ypos[temp]))*Math.sqrt(xpos[temp]*xpos[temp]+ypos[temp]*ypos[temp]));
+				if(Math.random()<0.5)
+				{
+					yv[temp]=-yv[temp];
+					xv[temp]=-xv[temp];
+				}
+				xv[temp]=xv[temp]+(Math.random())/5-0.1;
+				yv[temp]=yv[temp]+(Math.random())/5-0.1;
+				r[temp]=0;
+				temp++;
+			}
+			//console.log(xv[1])
+			temp=0;
+			var svgbasis="";
+			while(temp<=planetcount)
+			{
+				svgbasis=svgbasis+"<circle id='"+temp+"' />"
+				temp++
+			}
+			document.getElementById("svg").innerHTML=svgbasis;
+			svgbasis="";
+			function run () {
+			sc=0;
+			while(sc<=speed)
+			{
+				if(poc && !running)
+				{
+				running=1;
+				temp=0;
+				temp1=0;
+				while(temp<=planetcount) //accelaraion calculation
+				{
+					if(mass[temp]!=0)
+					{
+						var xdist,ydist;
+						xa[temp]=0;
+						ya[temp]=0;
+						temp1=0;
+						while(temp1<=planetcount)
+						{
+							if(temp1!=temp)
+							{
+								xdist=xpos1[temp]-xpos[temp1];
+								ydist=ypos1[temp]-ypos[temp1];
+								xa[temp]=xa[temp]+(G*mass[temp1]*xdist/((xdist*xdist+ydist*ydist)*Math.sqrt(xdist*xdist+ydist*ydist)));
+								ya[temp]=ya[temp]+(G*mass[temp1]*ydist/((xdist*xdist+ydist*ydist)*Math.sqrt(xdist*xdist+ydist*ydist)));
+							}
+							temp1++;
+						}
+					}
+					temp++;
+				}
+				temp=0;
+				while(temp<=planetcount) //pos&velocity&radius calculation
+				{
+					if(mass[temp]!=0)
+					{
+						xpos1[temp]=xpos[temp]+acc*xv[temp]*dt-0.5*acc*acc*xa[temp]*dt*dt;
+						xpos[temp]=xpos[temp]+xv[temp]*dt-0.5*xa[temp]*dt*dt;
+						
+						xv[temp]=xv[temp]-xa[temp]*dt;
+						ypos1[temp]=ypos[temp]+acc*yv[temp]*dt-0.5*acc*acc*ya[temp]*dt*dt;
+						ypos[temp]=ypos[temp]+yv[temp]*dt-0.5*ya[temp]*dt*dt;
+						
+						yv[temp]=yv[temp]-ya[temp]*dt;
+						r[temp]=Math.sqrt(mass[temp]);
+					}
+					temp++;
+				}
+				temp=0;
+				temp1=0;
+				while(temp<=planetcount) //collision check
+				{
+					temp1=0;
+					if(mass[temp]!=0)
+					{
+						while(temp1<=planetcount)
+						{
+							if(temp1!=temp)
+							{
+								if(Math.sqrt((xpos[temp]-xpos[temp1])*(xpos[temp]-xpos[temp1])+(ypos[temp]-ypos[temp1])*(ypos[temp]-ypos[temp1]))<=1*(r[temp]+r[temp1])) //collide happens
+								{
+									if(mass[temp]>mass[temp1])
+									{
+										xv[temp]=(xv[temp]*mass[temp]+xv[temp1]+mass[temp1])/(mass[temp]+mass[temp1]);
+										yv[temp]=(yv[temp]*mass[temp]+yv[temp1]+mass[temp1])/(mass[temp]+mass[temp1]);
+										mass[temp]=mass[temp]+mass[temp1];
+										xv[temp1]=0;
+										yv[temp1]=0;
+										mass[temp1]=0;
+										r[temp1]=0;
+									}
+									else
+									{
+										xv[temp1]=(xv[temp1]*mass[temp1]+xv[temp]+mass[temp])/(mass[temp]+mass[temp1]);
+										yv[temp1]=(yv[temp1]*mass[temp1]+yv[temp]+mass[temp])/(mass[temp]+mass[temp1]);
+										mass[temp1]=mass[temp]+mass[temp1];
+										xv[temp]=0;
+										yv[temp]=0;
+										mass[temp]=0;
+										r[temp]=0;
+									}
+								}
+							}
+							temp1++;
+						}
+					}
+					temp++;
+				}
+				//console.log(xa[20],ya[20]);
+				temp=1;
+				while(temp<=planetcount) //put sun to center
+				{
+					if(mass[temp]!=0)
+					{
+						xpos[temp]=xpos[temp]-xpos[0];
+						ypos[temp]=ypos[temp]-ypos[0];
+					}
+					temp++;
+				}
+				xpos[0]=0;
+				ypos[0]=0;
+				running=0;
+				}
+			sc++;
+			}
+			}
+			var camx=0,camy=0,zoom=1;
+			function display () {
+				//console.log(-1*G*mass[0]/Math.sqrt(xpos[1]*xpos[1]+ypos[1]*ypos[1])+0.5*Math.sqrt(xv[1]*xv[1]+yv[1]*yv[1])*Math.sqrt(xv[1]*xv[1]+yv[1]*yv[1]));
+				var i=0;
+				var display="";
+				display=display+"<table style='background-color:rgba(0,0,0,0);border:0;font-size:20%;color:white;'><tr><th>Name</th><th>position</th><th>mass</th></tr>"
+				while(i<=planetcount)
+				{
+					document.getElementById(i).setAttribute("cx",(xpos[i]-camx)*zoom+(document.body.clientWidth-200)/2);
+					document.getElementById(i).setAttribute("cy",(-ypos[i]-camy)*zoom+(document.body.clientHeight-100)/2);
+					document.getElementById(i).setAttribute("r",r[i]*zoom);
+					document.getElementById(i).style.fill=colors[i];
+					if(mass[i]!=0)
+					{
+						display=display+"<tr style='background-color:rgba(0,0,0,0);margin:0'><td><p style='color:"+colors[i]+";padding:0'>"+names[i]+"</p></td>"+"<td style='color:black;padding:0;'>"+xpos[i].toPrecision(5)+","+ypos[i].toPrecision(5)+"</td>"+"<td style='color:black;padding:0'>"+mass[i].toPrecision(5)+"</td></tr>"
+					}
+					i++;
+				}
+				display=display+"</table>"
+				//console.log(display);
+				document.getElementById("databar").innerHTML=display;
+				document.getElementById("zoomdisplay").innerHTML=zoom.toFixed(3)+"x";
+				document.getElementById("speeddisplay").innerHTML=speed.toFixed(3)+"x";
+			}
+			
+			function pauseorcontinue () {
+				if(poc)
+				{
+					poc=false;
+				}
+				else
+				{
+					poc=true;
+				}
+			}
+			window.setInterval("display()",50)
+			window.setInterval("run()",1);
+			//run(); run();
+		</script>
+	</body>
+</html>
