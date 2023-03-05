@@ -77,15 +77,24 @@
 					</tr>
 				</table>
 				<div style="display: inline;">
-					<button onclick="pauseorcontinue()">pause/continue</button>
+					<button id="stbut" onclick="pauseorcontinue()">pause/continue</button>
 					<button onclick="if(speed!=0.5){speed=speed/2}">decrease speed</button>
 					<p style="display: inline;font-size: 0.7em;" id="speeddisplay"></p>
 					<button onclick="speed=speed*2">increase speed</button>
 				</div>
 			</div>
 		</div>
-		
 		<script>
+		var ids[205];
+		function reader(){
+		alert("114514");
+		for(var i=1;i<=200;i++){
+			ids[i]=document.getElementById(i);
+		}
+		}
+		</script>
+		<script>
+		var ifrst =0;
 			//console.log(document.body.clientWidth,document.body.clientHeight);
 			var G=1.5,dt=0.001;
 			var poc=0; //pause or continue
@@ -278,6 +287,12 @@
 				document.getElementById("databar").innerHTML=display;
 				document.getElementById("zoomdisplay").innerHTML=zoom.toFixed(3)+"x";
 				document.getElementById("speeddisplay").innerHTML=speed.toFixed(3)+"x";
+				
+				if(ifrst==0&&poc==true){
+				
+					reader();
+					ifrst=2;
+				}
 			}
 			
 			function pauseorcontinue () {
@@ -293,6 +308,17 @@
 			window.setInterval("display()",50)
 			window.setInterval("run()",1);
 			//run(); run();
+		</script>
+		<script>
+		
+		
+			window.onload=function(){
+				var buttonst=document.getElementById("stbut");
+				stbut.onclick=function(){
+					pauseorcontinue();
+					
+				}
+			}
 		</script>
 	</body>
 </html>
