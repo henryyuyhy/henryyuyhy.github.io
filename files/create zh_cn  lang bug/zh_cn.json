@@ -1,5 +1,5 @@
 {
-	"_": "感谢您协助翻译《机械动力》！",
+	"_": "翻译者你在整什么啊？？？？？？！！！！！！",
 	"block.create.acacia_window": "金合欢木窗户",
 	"block.create.acacia_window_pane": "金合欢木窗户板",
 	"block.create.adjustable_chain_gearshift": "可调节链式传动箱",
@@ -1020,7 +1020,7 @@
 	"create.generic.unit.rpm": "RPM",
 	"create.generic.unit.stress": "su",
 	"create.generic.unit.degrees": "°",
-	"create.generic.unit.millibuckets": "%1$smB",
+	"create.generic.unit.millibuckets": "mB",
 	"create.generic.unit.buckets": "B",
   "create.generic.unit.droplets": "%1$s滴",
 	"create.generic.clockwise": "顺时针方向",
