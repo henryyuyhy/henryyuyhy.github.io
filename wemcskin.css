@@ -27,7 +27,7 @@
 	/* 控制面板字体 */
 
 	/*登陆/安装界面背景图片*/
-	--background-login-image: url(https://api.imlazy.ink/img);
+	--background-login-image: url('https://img.moegirl.org.cn/common/6/64/Rainy_Heart_Phigros.png');
 	/*电脑端登录页背景图（来自 雫 API 的随机图片API）*/
 	--background-image: url('https://img.moegirl.org.cn/common/6/64/Rainy_Heart_Phigros.png');
 		/*--background-image: url(https://cdn.imlazy.ink:233/img/background/83708125_p0.jpg);*/
