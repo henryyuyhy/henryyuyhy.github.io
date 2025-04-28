@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Display</title>
+    <style>
+        html {
+            font-size: 16px;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            background-color: #f5f5f5;
+        }
+        
+        .large-text {
+            font-size: 3rem;
+            font-weight: bold; /* 添加粗体显示 */
+            text-align: center;
+            display: none;
+            padding: 0 5vw;
+            white-space: pre-wrap;
+            word-break: break-word;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-height: 90vh;
+            overflow: auto;
+        }
+        
+        .input-container {
+            text-align: center;
+            padding: 0 5vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin: 1rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+            width: 60vw;
+            max-width: 400px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            text-align: left;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        textarea {
+            padding: 0.8rem;
+            font-size: 1rem;
+            width: 100%;
+            height: 20vh;
+            box-sizing: border-box;
+            resize: vertical;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        input[type="number"] {
+            padding: 0.8rem;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        button {
+            padding: 0.8rem 1.6rem;
+            font-size: 1rem;
+            margin-top: 1rem;
+            width: 60vw;
+            max-width: 400px;
+            box-sizing: border-box;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        @media (min-width: 768px) {
+            textarea, input[type="number"], button {
+                width: 40vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="input-container" id="inputContainer">
+        <div class="input-group">
+            <label for="userInput">输入内容：</label>
+            <textarea id="userInput" placeholder="请输入内容（可以换行）"></textarea>
+        </div>
+        
+        <div class="input-group">
+            <label for="fontSize">字号（rem）：</label>
+            <input type="number" id="fontSize" placeholder="输入字号" value="3" step="0.1">
+        </div>
+        
+        <button onclick="displayText()">展示内容</button>
+    </div>
+    
+    <div class="large-text" id="displayArea"></div>
+    
+    <script>
+        function displayText() {
+            const inputText = document.getElementById('userInput').value;
+            const fontSize = parseFloat(document.getElementById('fontSize').value);
+            const displayArea = document.getElementById('displayArea');
+            const inputContainer = document.getElementById('inputContainer');
+            
+            if (inputText.trim() !== '' && !isNaN(fontSize) && fontSize > 0) {
+                displayArea.textContent = inputText;
+                displayArea.style.fontSize = fontSize + 'rem';
+                displayArea.style.display = 'block';
+                inputContainer.style.display = 'none';
+            } else {
+                alert('请输入有效内容和字号！');
+            }
+        }
+    </script>
+</body>
+</html>
