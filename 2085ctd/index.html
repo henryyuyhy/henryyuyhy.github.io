@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>倒计时2085年</title>
+    <style>
+        /* 重置默认样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 页面布局：上下分区 */
+        body {
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            font-family: "Microsoft YaHei", sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 图片容器：限制图片高度为屏幕60% */
+        .image-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            min-height: 0;
+        }
+
+        .center-img {
+            max-height: 60vh; /* 图片高度严格限制为屏幕60% */
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            object-fit: contain;
+        }
+
+        /* 倒计时容器：占剩余空间，完全居中 */
+        .countdown-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: stretch; /* 关键：让子元素撑满容器宽度 */
+            gap: 15px;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* 核心：自适应字号 + 适配窄屏 */
+        :root {
+            /* 调整vw比例，让窄屏字号更适配宽度 */
+            --countdown-font-size: clamp(1.2rem, 6vw, 5rem);
+        }
+
+        /* 上一行文字：距2085年1月1日 */
+        .countdown-text-top {
+            font-size: var(--countdown-font-size);
+            color: #333;
+            font-weight: 600;
+            text-align: center;      /* 文字居中 */
+            white-space: nowrap;    /* 不换行 */
+            max-height: 20vh;       /* 高度≤20vh */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            /* 关键：让文字尽可能占满宽度（窄屏生效） */
+            width: 100%;
+            letter-spacing: 0.1em; /* 轻微增加字间距，视觉上更满 */
+        }
+
+        .countdown-text-dl {
+            padding-top: 1rem;
+            font-size: calc(var(--countdown-font-size) / 2);
+            color: #333;
+            text-align: center;      /* 文字居中 */
+            white-space: nowrap;    /* 不换行 */
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            /* 关键：让文字尽可能占满宽度（窄屏生效） */
+            width: 100%;
+            letter-spacing: 0.1em; /* 轻微增加字间距，视觉上更满 */
+        }
+
+        /* 下一行文字：还有x天（与上一行一致） */
+        .countdown-text-bottom {
+            font-size: var(--countdown-font-size);
+            color: #333;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+            width: 100%;
+            letter-spacing: 0.1em; /* 统一字间距 */
+        }
+
+        /* 天数数字高亮 */
+        .countdown-text-bottom #days-left {
+            color: #4285f4;
+            font-weight: bold;
+            letter-spacing: normal; /* 数字不加字间距，保持醒目 */
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container">
+        <img src="2085.webp" alt="展示图片" class="center-img">
+    </div>
+
+    <div class="countdown-container">
+        <div class="countdown-text-top">距2085年1月1日</div>
+        <div class="countdown-text-bottom">还有<span id="days-left">0</span>天</div>
+        
+        <a href="2085.mp3" class="countdown-text-dl">下载音乐</a>
+    </div>
+
+    <script>
+        function calculateRemainingDays() {
+            const targetDate = new Date(2085, 0, 1);
+            const currentDate = new Date();
+            const timeDiff = targetDate - currentDate;
+            const daysLeft = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            document.getElementById('days-left').textContent = daysLeft > 0 ? daysLeft : 0;
+        }
+
+        window.onload = function() {
+            calculateRemainingDays();
+            setInterval(calculateRemainingDays, 1000);
+
+            
+            
+        };
+    </script>
+</body>
+</html>
